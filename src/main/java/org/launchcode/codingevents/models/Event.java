@@ -1,8 +1,6 @@
 package org.launchcode.codingevents.models;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -24,16 +22,36 @@ public class Event {
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
+    @AssertTrue
+    private boolean mustRegister;
+    @Positive(message = "Number must be one or more.")
+    private int numberOfAttendees;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotBlank(message = "Cannot be blank!!!! C'mon, do better!!!!")
+    @Size(max = 100, message = "Description too long. 100 char max. You trying to write a novel or something?")
+    private String location;
+    @Positive(message = "Be positive, man!")
+    private int duration;
+
+
+
+    public Event(String name, String description, String contactEmail, String location, boolean mustRegister, int numberOfAttendees, int duration) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.location = location;
+        this.mustRegister = true;
+        this.numberOfAttendees = numberOfAttendees;
+        this.duration = duration;
+
+    }
+
+    public Event() {
         this.id = nextId;
         nextId++;
     }
 
-    public Event() {}
     public String getName() {
         return name;
     }
@@ -61,6 +79,38 @@ public class Event {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isMustRegister() {
+        return mustRegister;
+    }
+
+    public void setMustRegister(boolean mustRegister) {
+        this.mustRegister = mustRegister;
+    }
+
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
+    }
+
+    public void setNumberOfAttendees(int numberOfAttendees) {
+        this.numberOfAttendees = numberOfAttendees;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     @Override
